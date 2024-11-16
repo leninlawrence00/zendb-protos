@@ -1,0 +1,57 @@
+syntax = "proto3";
+
+package zendbprotos;
+option go_package = "./";
+
+service StoreService {
+  // Get a value by bucket and key
+  rpc Get(GetRequest) returns (GetResponse);
+
+  // Set a value in a bucket with a specific key
+  rpc Set(SetRequest) returns (SetResponse);
+
+  // Delete an entire bucket
+  rpc DeleteBucket(DeleteBucketRequest) returns (DeleteBucketResponse);
+
+  // Delete a specific key in a bucket
+  rpc DeleteKey(DeleteKeyRequest) returns (DeleteKeyResponse);
+}
+
+message GetRequest {
+  string bucket = 1;
+  string key = 2;
+}
+
+message GetResponse {
+  string value = 1;
+}
+
+message SetRequest {
+  string bucket = 1;
+  string key = 2;
+  string value = 3;
+}
+
+message SetResponse {
+  int32 status_code = 1; // Status code (e.g., 0 for success, non-zero for error)
+  string message = 2;    // Detailed message about the operation result
+}
+
+message DeleteBucketRequest {
+  string bucket = 1;
+}
+
+message DeleteBucketResponse {
+  int32 status_code = 1; // Status code (e.g., 0 for success, non-zero for error)
+  string message = 2;    // Detailed message about the operation result
+}
+
+message DeleteKeyRequest {
+  string bucket = 1;
+  string key = 2;
+}
+
+message DeleteKeyResponse {
+  int32 status_code = 1; // Status code (e.g., 0 for success, non-zero for error)
+  string message = 2;    // Detailed message about the operation result
+}
